@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #ff5733;
+      padding: 10px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    header nav ul {
+      list-style-type: none;
+    }
+
+    header nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    #menu {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .menu-item {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 30%;
+      text-align: center;
+    }
+
+    .menu-item h3 {
+      color: #ff5733;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    #cart {
+      background-color: #fff;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #cart ul {
+      list-style-type: none;
+    }
+
+    #checkout {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #checkout:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Le Restaurant Savoureux</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#">Menu</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="menu">
+      <h2>Notre Menu</h2>
+      <div class="menu-item">
+        <h3>Pizza Margherita</h3>
+        <p>Pizza avec sauce tomate, mozzarella et basilic frais</p>
+        <button class="add-to-cart" data-item="Pizza Margherita" data-price="12">Ajouter au panier</button>
+      </div>
+      <div class="menu-item">
+        <h3>Pasta Carbonara</h3>
+        <p>Pâtes avec sauce crémeuse au fromage et bacon</p>
+        <button class="add-to-cart" data-item="Pasta Carbonara" data-price="15">Ajouter au panier</button>
+      </div>
+      <div class="menu-item">
+        <h3>Salade César</h3>
+        <p>Salade verte avec poulet grillé, fromage râpé et sauce César</p>
+        <button class="add-to-cart" data-item="Salade César" data-price="10">Ajouter au panier</button>
+      </div>
+    </section>
+
+    <section id="cart">
+      <h2>Panier</h2>
+      <ul id="cart-items">
+        <!-- Les articles du panier seront ajoutés ici -->
+      </ul>
+      <p>Total: <span id="total-price">0</span>€</p>
+      <button id="checkout">Valider la commande</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Le Restaurant Savoureux</p>
+  </footer>
+
+  <script>
+    const cartItems = document.getElementById("cart-items");
+    const totalPriceElement = document.getElementById("total-price");
+    let totalPrice = 0;
+
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+      button.addEventListener("click", () => {
+        const itemName = button.getAttribute("data-item");
+        const itemPrice = parseFloat(button.getAttribute("data-price"));
+
+        // Ajouter l'élément au panier
+        const cartItem = document.createElement("li");
+        cartItem.textContent = `${itemName} - ${itemPrice}€`;
+        cartItems.appendChild(cartItem);
+
+        // Mettre à jour le prix total
+        totalPrice += itemPrice;
+        totalPriceElement.textContent = totalPrice.toFixed(2);
+      });
+    });
+
+    document.getElementById("checkout").addEventListener("click", () => {
+      alert(`Votre commande a été validée ! Total à payer : ${totalPrice.toFixed(2)}€`);
+      // Réinitialiser le panier après validation
+      cartItems.innerHTML = '';
+      totalPrice = 0;
+      totalPriceElement.textContent = '0';
+    });
+  </script>
